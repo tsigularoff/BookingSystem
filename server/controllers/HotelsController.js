@@ -1,4 +1,4 @@
-var Hotel = requre('mongoose').model('Hotel');
+var Hotel = require('mongoose').model('Hotel');
 
 function getAllHotels(req, res, next) {
     Hotel.find({}).exec(function (err, collection) {
