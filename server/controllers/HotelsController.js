@@ -13,3 +13,4 @@ function getAllHotels(req, res, next) {
 module.exports = {
     getAllHotels : getAllHotels
 };
+
