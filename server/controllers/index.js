@@ -6,4 +6,4 @@ var hotelsController = require('../controllers/hotelsController');
 module.exports = {
     users: usersController,
     courses: coursesController
-}
+};
