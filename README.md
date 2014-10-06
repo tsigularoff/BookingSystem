@@ -1,4 +1,4 @@
-Telerik-Academy-Courses
+Booking System
 =======================
 
 MEAN Stack Application

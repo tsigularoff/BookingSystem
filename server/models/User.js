@@ -11,20 +11,15 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.method({
-    authenticate: function(password) {
-        if (encryption.generateHashedPassword(this.salt, password) === this.hashPass) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    authenticate: function (password) {
+        return encryption.generateHashedPassword(this.salt, password) === this.hashPass;
     }
-})
+});
 
 var User = mongoose.model('User', userSchema);
 
-module.exports.seedInitialUsers = function() {
-    User.find({}).exec(function(err, collection) {
+module.exports.seedInitialUsers = function () {
+    User.find({}).exec(function (err, collection) {
         if (err) {
             console.log('Cannot find users: ' + err);
             return;
@@ -35,14 +30,8 @@ module.exports.seedInitialUsers = function() {
             var hashedPwd;
 
             salt = encryption.generateSalt();
-            hashedPwd = encryption.generateHashedPassword(salt, 'Ivaylo');
-            User.create({username: 'ivaylo.kenov', firstName: 'Ivaylo', lastName: 'Kenov', salt: salt, hashPass: hashedPwd, roles: ['admin']});
-            salt = encryption.generateSalt();
-            hashedPwd = encryption.generateHashedPassword(salt, 'Nikolay');
-            User.create({username: 'Nikolay.IT', firstName: 'Nikolay', lastName: 'Kostov', salt: salt, hashPass: hashedPwd, roles: ['standard']});
-            salt = encryption.generateSalt();
-            hashedPwd = encryption.generateHashedPassword(salt, 'Doncho');
-            User.create({username: 'Doncho', firstName: 'Doncho', lastName: 'Minkov', salt: salt, hashPass: hashedPwd});
+            hashedPwd = encryption.generateHashedPassword(salt, 'Kiril');
+            User.create({username: 'kiril', firstName: 'Kiril', lastName: 'Tsarnakliyski', salt: salt, hashPass: hashedPwd, roles: ['admin']});
             console.log('Users added to database...');
         }
     });
