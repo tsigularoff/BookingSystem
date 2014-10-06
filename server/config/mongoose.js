@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     user = require('../models/User'),
     course = require('../models/Course'),
+    room = require('../models/Room'),
     hotel = require('../models/Hotel');
 
 module.exports = function (config) {

@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 
 var roomSchema = mongoose.Schema({
-    room_type: String,
-    room_max_occupancy: Number,
-    price: Number,
+    room_type: {type: String, required: true},
+    room_max_occupancy: {type: Number, required: true},
+    price: {type: Number, required: true},
+    pictureUrl: String,
     bookings: [
         {
             fromDate: Date,
@@ -11,5 +12,6 @@ var roomSchema = mongoose.Schema({
         }
     ]
 });
+mongoose.model('Room', roomSchema);
 
-module.exports = mongoose.model('Room', roomSchema);
+module.exports.schema = roomSchema;
