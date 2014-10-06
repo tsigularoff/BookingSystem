@@ -1,10 +1,10 @@
 {
-  "name": "TelerikAcademyCourses",
+  "name": "Booking System",
   "version": "0.0.1",
   "description": "MEAN Stack application",
   "main": "server.js",
   "authors": [
-    "Ivaylo Kenov"
+    "Team Tyche"
   ],
   "license": "MIT",
   "ignore": [
