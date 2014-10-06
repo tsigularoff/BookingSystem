@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
-var mongoose = require('./Room');
+var mongoose = require('mongoose'),
+    Room = require('./Room');
 
 var hotelSchema = mongoose.Schema({
     name: String,
     description: String,
-    star_rating: Integer,
+    star_rating: Number,
     address: String,
     city: String,
     rooms: [Room]
