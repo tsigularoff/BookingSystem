@@ -1,7 +1,15 @@
 var Hotel = require('mongoose').model('Hotel');
+var validators=require('../utilities/validators');
+
+var ALLOWED_SORT_HOTELS=['name']; //TODO: Fill
+var ITEMS_LIMIT=10;
 
 function getAllHotels(req, res, next) {
-    Hotel.find({}).populate('owner').exec(function (err, collection) {
+
+    var page = validators.validatePage(req.query.page);
+    var sortBy = validators.validateSort(req.query.sortBy,ALLOWED_SORT_HOTELS);
+
+    Hotel.find({}).skip((page-1)*ITEMS_LIMIT).limit(ITEMS_LIMIT).populate('owner').exec(function (err, collection) {
         if (err) {
             throw "Hotels could not be loaded" + err;
         }

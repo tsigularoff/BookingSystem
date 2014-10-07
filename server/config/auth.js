@@ -5,7 +5,8 @@ module.exports = {
         var auth = passport.authenticate('local', function(err, user) {
             if (err) return next(err);
             if (!user) {
-                res.send({success: false})
+//                res.send({success: false})
+                res.status(400).json({message:'No such user exists!'});
             }
 
             req.logIn(user, function(err) {
