@@ -11,9 +11,7 @@ module.exports = {
     users: usersController,
     courses: coursesController,
     hotels: hotelsController,
-
-    reservations:reservationsController
-
+    reservations:reservationsController,
     rooms: roomsController
 
 };
