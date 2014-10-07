@@ -10,23 +10,18 @@ var Room = mongoose.model('Room');
 function makeReservation(req, res, next) {
     Hotel.findOne({_id: req.params.id})
         .findOne({_id:req.params.id}).and([{'rooms._id':req.body.roomId}])
+        .select('rooms')
         .exec(function (err, hotel) {
             if(err || !hotel){
-                res.statusCode=400;
-                res.send(err?err:'No such room exists!');
+                res.status(400).json({error:err?err:'No such room exists!'});
             }
 
             var booking=new Booking();
             booking.fromDate=req.body.fromDate;
             booking.toDate=req.body.toDate;
             booking.bookerId='to-delete-this';
-            var room=undefined;
-            for(var i= 0;i<hotel.rooms.length;i++){
-                if(hotel.rooms[i].id==req.body.roomId){
-                    room=hotel.rooms[i];
-                    break;
-                }
-            }
+            var room=hotel.rooms.id(req.body.roomId);
+            
             room.bookings.push(booking);
             hotel.save(function (err, hotel) {
                 res.send(room);
