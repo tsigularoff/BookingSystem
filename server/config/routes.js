@@ -2,7 +2,7 @@ var auth = require('./auth'),
     controllers = require('../controllers');
 
 module.exports = function (app) {
-    app.get('/api/users', auth.isInRole('admin'), controllers.users.getAllUsers);
+    app.get('/api/users', auth.isInRole(['admin']), controllers.users.getAllUsers);
     app.post('/api/users', controllers.users.createUser);
     app.put('/api/users', auth.isAuthenticated, controllers.users.updateUser);
 
@@ -10,7 +10,7 @@ module.exports = function (app) {
     app.get('/api/courses/:id', controllers.courses.getCourseById);
 
     app.get('/api/hotels', controllers.hotels.getAllHotels);
-    app.post('/api/hotels', auth.isAuthenticated, controllers.hotels.createHotel);
+    app.post('/api/hotels', auth.isInRole(['admin', 'owner']), controllers.hotels.createHotel);
     app.get('/api/hotels/:id', auth.isAuthenticated, controllers.hotels.getHotelById);
 
     app.get('/partials/:partialArea/:partialName', function (req, res) {

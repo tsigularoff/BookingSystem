@@ -29,9 +29,16 @@ module.exports = {
             next();
         }
     },
-    isInRole: function(role) {
+    isInRole: function(roles) {
         return function(req, res, next) {
-            if (req.isAuthenticated() && req.user.roles.indexOf(role) > -1) {
+            var permitted = false;
+            for (var i = 0; i < roles.length; i++) {
+                var role = roles[i];
+                if (req.isAuthenticated() && req.user.roles.indexOf(role) > -1){
+                    permitted = true;
+                }
+            }
+            if (permitted) {
                 next();
             }
             else {
