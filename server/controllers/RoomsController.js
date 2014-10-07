@@ -25,7 +25,32 @@ function createRoom(req, res, next) {
     });
 }
 
+function deleteRoom(req, res, next) {
+    Hotel.findOne({_id: req.params.id}).exec(function (err, hotel) {
+        if (err || !hotel) {
+            console.log('Hotel could not be deleted: ' + err);
+            res.status(400).json({message: err});
+        }
+        if (req.user._id === hotel.owner._id || req.user.roles.indexOf('admin') > -1) {
+
+            Room.findOne({_id: req.params.roomId}).exec(function (err, room) {
+                if (err || !room) {
+                    console.log('Room could not be deleted: ' + err);
+                    res.status(400).json({message: err});
+                }
+                room.remove(function () {
+                    res.status(200).json({message: 'Room deleted!'});
+                });
+            });
+        }
+        else {
+            res.status(400).json({message: 'You do not have permissions!'});
+        }
+    });
+}
+
 module.exports = {
-    createRoom: createRoom
+    createRoom: createRoom,
+    deleteRoom: deleteRoom
 };
 

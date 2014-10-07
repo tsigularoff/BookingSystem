@@ -17,7 +17,7 @@ module.exports = {
                 if (err) {
 //                    res.status(400);
 //                    return res.send({reason: err.toString()});
-                    res.status(400).json({message:err});
+                    res.status(400).json({message: err});
                 }
 
                 res.send(user);
@@ -39,6 +39,17 @@ module.exports = {
         else {
             res.status(400).json({message: 'You do not have permissions!'});
             //res.send({reason: 'You do not have permissions!'})
+        }
+    },
+    deleteUser: function (req, res, next) {
+        if (req.user.roles.indexOf('admin') > -1) {
+
+            User.remove({_id: req.params.id}, function () {
+                res.status(200).json({message: 'User deleted!'});
+            });
+        }
+        else {
+            res.status(400).json({message: 'You do not have permissions!'});
         }
     },
     getAllUsers: function (req, res) {
