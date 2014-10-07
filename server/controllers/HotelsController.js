@@ -11,7 +11,7 @@ function getAllHotels(req, res, next) {
 }
 function createHotel(req, res, next) {
     var hotel = new Hotel(req.body);
-    hotel.user = req.user;
+    hotel.owner = req.user;
 
     hotel.save(function (err) {
         if (err) {
