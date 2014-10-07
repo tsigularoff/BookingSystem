@@ -13,6 +13,8 @@ module.exports = function (app) {
     app.post('/api/hotels', auth.isInRole(['admin', 'owner']), controllers.hotels.createHotel);
     app.get('/api/hotels/:id', auth.isAuthenticated, controllers.hotels.getHotelById);
 
+    app.post('/api/hotels/:id/rooms', auth.isInRole(['admin', 'owner']), controllers.rooms.createRoom);
+
     app.get('/partials/:partialArea/:partialName', function (req, res) {
         res.render('../../public/app/' + req.params.partialArea + '/' + req.params.partialName)
     });
