@@ -27,6 +27,9 @@ function getHotelById(req, res, next) {
     Hotel.findOne({_id: req.params.id}).populate('owner').exec(function (err, hotel) {
         if (err) {
             console.log('Hotel could not be loaded: ' + err);
+            res.status(404).json({
+                error: 'Cannot find hotel'
+            });
         }
 
         res.send(hotel);
