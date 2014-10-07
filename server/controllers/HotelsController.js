@@ -1,7 +1,7 @@
 var Hotel = require('mongoose').model('Hotel');
 
 function getAllHotels(req, res, next) {
-    Hotel.find({}).populate('user').exec(function (err, collection) {
+    Hotel.find({}).populate('owner').exec(function (err, collection) {
         if (err) {
             throw "Hotels could not be loaded" + err;
         }
@@ -24,7 +24,7 @@ function createHotel(req, res, next) {
 }
 
 function getHotelById(req, res, next) {
-    Hotel.findOne({_id: req.params.id}).populate('user').exec(function (err, hotel) {
+    Hotel.findOne({_id: req.params.id}).populate('owner').exec(function (err, hotel) {
         if (err) {
             console.log('Hotel could not be loaded: ' + err);
         }
