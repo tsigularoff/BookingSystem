@@ -1,0 +1,35 @@
+.container
+    .well
+        .form.form-horizontal(name="hotelAddForm")
+            fieldset
+                legend Add your hotel
+                    .form-group
+                    label.col-md-2.control-label(for="hotel-name") Hotel Name
+                    .col-md-10
+                        input.form-control(type="text", placeholder="Hotel Name", ng-model="hotel.name", required)
+                    .form-group
+                    label.col-md-2.control-label(for="hotel-rating") Rating
+                    .col-md-10
+                        input.form-control(type="number", placeholder="Star Rating", ng-model="hotel.star_rating", required)
+                    .form-group
+                    label.col-md-2.control-label(for="hotel-city") City
+                    .col-md-10
+                        input.form-control(type="text", placeholder="City", ng-model="hotel.city", required)
+                    .form-group
+                    label.col-md-2.control-label(for="hotel-address") Address
+                    .col-md-10
+                        input.form-control(type="text", placeholder="Address", ng-model="hotel.address", required)
+                    .form-group
+                    label.col-md-2.control-label(for="hotel-picture") Picture
+                    .col-md-10
+                        input.form-control(type="text", placeholder="Picture URL", ng-model="hotel.pictureUrl", required)
+                    .form-group
+                    label.col-md-2.control-label(for="hotel-rooms-count") Rooms Count
+                    .col-md-10
+                        input.form-control(type="number", placeholder="Picture URL", ng-model="hotel.roomsCount", required)
+                    .form-group
+                    label.col-md-2.control-label(for="hotel-about") About Hotel
+                    .col-md-10
+                        input.form-control(type="text", placeholder="Picture URL", ng-model="hotel.description", required)
+
+
