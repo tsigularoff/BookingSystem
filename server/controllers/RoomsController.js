@@ -15,9 +15,10 @@ function createRoom(req, res, next) {
         hotel.rooms.push(room);
         hotel.save(function (err) {
             if (err) {
-                return res.status(500).json({
-                    error: 'Cannot create room'
-                });
+//                return res.status(500).json({
+//                    error: 'Cannot create room'
+//                });
+                res.status(400).json({message: err});
             }
             res.json(room);
         });
