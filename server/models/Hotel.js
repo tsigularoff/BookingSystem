@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
-    Room = require('mongoose').model('Room'),
     roomSchema = require('./Room').schema,
-    User = require('mongoose').model('User');
+    Room = require('mongoose').model('Room'),
+    User = require('mongoose').model('User'),
+    Booking = require('mongoose').model('Booking');
 
 var hotelSchema = mongoose.Schema({
     name: {type: String, required: true},
@@ -44,13 +45,9 @@ module.exports.seedInitialHotels = function () {
                         room_max_occupancy: 1,
                         price: 30,
                         pictureUrl: 'http://www.hotelcaledonianbarcelona.com/images/single-room.png',
-                        bookings: [
-                            {
-                                fromDate: new Date('10/11/2014'),
-                                toDate: new Date('10/15/2014')
-                            }
-                        ]
                     });
+                    var bookingOne = new Booking({fromDate: new Date('10/11/2014'), toDate: new Date('10/15/2014'), bookerId: user});
+                    roomOne.bookings.push(bookingOne);
                     hotelOne.rooms.push(roomOne);
                     hotelOne.save();
 
@@ -68,13 +65,9 @@ module.exports.seedInitialHotels = function () {
                         room_max_occupancy: 2,
                         price: 150,
                         pictureUrl: 'http://indochinagoldhotel.com/wp-content/uploads/Deluxe-Double-Room-23.jpg',
-                        bookings: [
-                            {
-                                fromDate: new Date('11/20/2014'),
-                                toDate: new Date('11/29/2014')
-                            }
-                        ]
                     });
+                    var bookingTwo = new Booking({fromDate: new Date('11/20/2014'), toDate: new Date('11/29/2014'), bookerId: user});
+                    roomTwo.bookings.push(bookingTwo);
                     hotelTwo.rooms.push(roomTwo);
                     hotelTwo.save();
                 });

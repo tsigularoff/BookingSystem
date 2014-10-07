@@ -10,6 +10,7 @@ module.exports = function (app, config) {
     app.set('views', config.rootPath + '/server/views');
     app.use(cookieParser());
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
     app.use(session({resave: true, saveUninitialized: true, secret: 'booking stars'}));
     app.use(stylus.middleware(
         {

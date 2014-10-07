@@ -1,16 +1,12 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    bookingSchema = require('./Booking').schema;
 
 var roomSchema = mongoose.Schema({
     room_type: {type: String, required: true},
     room_max_occupancy: {type: Number, required: true},
     price: {type: Number, required: true},
     pictureUrl: String,
-    bookings: [
-        {
-            fromDate: Date,
-            toDate: Date
-        }
-    ]
+    bookings: [bookingSchema]
 });
 mongoose.model('Room', roomSchema);
 
