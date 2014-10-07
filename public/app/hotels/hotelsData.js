@@ -44,8 +44,26 @@ app.factory('HotelsData', function($resource, $q, $http, identity) {
         return deffered.promise;
     }
 
+    function getHotelById(id) {
+        var deffered = $q.defer();
+
+        $http({
+            method: 'GET',
+            url : '/api/hotels/' + id
+        })
+            .success(function (data) {
+                deffered.resolve(data);
+            })
+            .error(function (err) {
+                deffered.reject(err);
+            });
+
+        return deffered.promise;
+    }
+
     return {
         getAllHotels : getAllHotels,
-        createHotel : createHotel
+        createHotel : createHotel,
+        getHotelById : getHotelById
     }
 });

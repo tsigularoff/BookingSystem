@@ -1,0 +1,8 @@
+.container(ng-controller="HotelDetailsController")
+    h1 Welcome to {{hotel.name}}
+    div.container
+        .panel.panel-info
+            ul.panel-heading.text-left Hotel Information
+            .panel-body
+               li.list-group-item Total Rooms : {{hotel.rooms.length}}
+               li.list-group-item About Hotel : {{hotel.description}}

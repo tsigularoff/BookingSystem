@@ -5,7 +5,6 @@ app.controller('HotelsController', function ($scope, $location, HotelsData, iden
             $scope.hotels = data;
             $scope.isAuth = identity.isAuthenticated();
             $scope.isHotelOwner = identity.isAuthorizedForRole('hotelOwner');
-            console.log( $scope.isHotelOwner);
         }, function (err) {
             console.log("error + " +  err);
         });
