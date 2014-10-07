@@ -16,4 +16,4 @@ function validateSort(prop,collection) {
 module.exports={
     validatePage:validatePage,
     validateSort:validateSort
-}
+};

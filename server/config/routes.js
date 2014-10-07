@@ -1,5 +1,6 @@
 var auth = require('./auth'),
-    controllers = require('../controllers');
+    controllers = require('../controllers'),
+    validator = require('node-validator');
 
 module.exports = function (app) {
     app.get('/api/users', auth.isInRole(['admin']), controllers.users.getAllUsers);
@@ -11,7 +12,7 @@ module.exports = function (app) {
 
     app.get('/api/hotels', controllers.hotels.getAllHotels);
     app.post('/api/hotels', auth.isAuthenticated, controllers.hotels.createHotel);
-	app.post('/api/hotels/:id/reservations'/*, auth.isAuthenticated*/,validator.express(app.get('reservationCheck')), controllers.reservations.makeReservation);
+    app.post('/api/hotels/:id/reservations'/*, auth.isAuthenticated*/, validator.express(app.get('reservationCheck')), controllers.reservations.makeReservation);
     app.get('/api/hotels/:id', auth.isAuthenticated, controllers.hotels.getHotelById);
 
     app.post('/api/hotels', auth.isInRole(['admin', 'owner']), controllers.hotels.createHotel);
