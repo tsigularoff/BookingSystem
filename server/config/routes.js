@@ -10,17 +10,14 @@ module.exports = function (app) {
     app.get('/api/courses/:id', controllers.courses.getCourseById);
 
     app.get('/api/hotels', controllers.hotels.getAllHotels);
-<<<<<<< HEAD
     app.post('/api/hotels', auth.isAuthenticated, controllers.hotels.createHotel);
 	app.post('/api/hotels/:id/reservations'/*, auth.isAuthenticated*/,validator.express(app.get('reservationCheck')), controllers.reservations.makeReservation);
     app.get('/api/hotels/:id', auth.isAuthenticated, controllers.hotels.getHotelById);
 
-=======
     app.post('/api/hotels', auth.isInRole(['admin', 'owner']), controllers.hotels.createHotel);
     app.get('/api/hotels/:id', auth.isAuthenticated, controllers.hotels.getHotelById);
 
     app.post('/api/hotels/:id/rooms', auth.isInRole(['admin', 'owner']), controllers.rooms.createRoom);
->>>>>>> origin/master
 
     app.get('/partials/:partialArea/:partialName', function (req, res) {
         res.render('../../public/app/' + req.params.partialArea + '/' + req.params.partialName)
