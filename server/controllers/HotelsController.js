@@ -15,9 +15,7 @@ function createHotel(req, res, next) {
 
     hotel.save(function (err) {
         if (err) {
-            return res.status(500).json({
-                error: 'Cannot create the hotel'
-            });
+            res.status(400).json({message: err});
         }
         res.json(hotel);
     });
@@ -27,9 +25,7 @@ function getHotelById(req, res, next) {
     Hotel.findOne({_id: req.params.id}).populate('owner').exec(function (err, hotel) {
         if (err) {
             console.log('Hotel could not be loaded: ' + err);
-            res.status(404).json({
-                error: 'Cannot find hotel'
-            });
+            res.status(400).json({message: err});
         }
 
         res.send(hotel);

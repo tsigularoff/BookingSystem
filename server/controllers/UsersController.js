@@ -9,6 +9,7 @@ module.exports = {
         User.create(newUserData, function (err, user) {
             if (err) {
                 console.log('Failed to register new user: ' + err);
+                res.status(400).json({message: err});
                 return;
             }
 
@@ -32,16 +33,18 @@ module.exports = {
 
             User.update({_id: req.body._id}, updatedUserData, function () {
                 res.end();
-            })
+            });
         }
         else {
-            res.send({reason: 'You do not have permissions!'})
+            res.status(400).json({message: 'You do not have permissions!'});
+            //res.send({reason: 'You do not have permissions!'})
         }
     },
     getAllUsers: function (req, res) {
         User.find({}).exec(function (err, collection) {
             if (err) {
                 console.log('Users could not be loaded: ' + err);
+                res.status(400).json({message: err});
             }
 
             res.send(collection);
