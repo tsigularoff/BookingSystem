@@ -4,8 +4,16 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     passport = require('passport');
+validator = require('node-validator');
+
 
 module.exports = function (app, config) {
+
+    app.set('reservationCheck', validator.isObject()
+        .withRequired('fromDate', validator.isIsoDate())
+        .withRequired('toDate', validator.isIsoDate())
+        .withRequired('roomId', validator.isString()));
+
     app.set('view engine', 'jade');
     app.set('views', config.rootPath + '/server/views');
     app.use(cookieParser());
