@@ -43,6 +43,10 @@ app.config(function($routeProvider, $locationProvider) {
             controller: 'UserListCtrl',
             resolve: routeUserChecks.adminRole
         })
+        .when('/hotels', {
+            templateUrl: '/partials/hotels/hotels-list',
+            controller: 'HotelsController'
+        })
 });
 
 app.run(function($rootScope, $location) {

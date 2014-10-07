@@ -33,7 +33,7 @@ module.exports.seedInitialHotels = function () {
                     var hotelOne = new Hotel({
                         name: 'Hilton',
                         description: 'Nice place',
-                        star_rating: 2,
+                        star_rating: 5,
                         address: 'Center',
                         city: 'Sofia',
                         pictureUrl: 'http://bucharest-guide.ro/poze/76b4d89b45fb70dc02ddf8aa4f077585.jpg',
