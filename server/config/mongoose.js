@@ -23,6 +23,5 @@ module.exports = function (config) {
     });
 
     user.seedInitialUsers();
-    course.seedInitialCourses();
     hotel.seedInitialHotels();
 };
