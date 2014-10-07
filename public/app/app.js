@@ -47,6 +47,10 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl: '/partials/hotels/hotels-list',
             controller: 'HotelsController'
         })
+        .when('/hotels/create', {
+            templateUrl: '/partials/hotels/create-hotel',
+            controller: 'HotelsController'
+        })
 });
 
 app.run(function($rootScope, $location) {
