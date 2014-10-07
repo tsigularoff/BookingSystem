@@ -33,6 +33,7 @@ module.exports.seedInitialUsers = function () {
             salt = encryption.generateSalt();
             hashedPwd = encryption.generateHashedPassword(salt, 'Kiril');
             User.create({username: 'kiril', firstName: 'Kiril', lastName: 'Tsarnakliyski', salt: salt, hashPass: hashedPwd, roles: ['admin']});
+            User.create({username: 'simo', firstName: 'Simo', lastName: 'Bidjev', salt: salt, hashPass: hashedPwd, roles: ['hotelOwner']});
             console.log('Users added to database...');
         }
     });
