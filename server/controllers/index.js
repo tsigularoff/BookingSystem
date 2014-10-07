@@ -1,10 +1,12 @@
 var usersController = require('../controllers/usersController');
 var coursesController = require('../controllers/coursesController');
 var hotelsController = require('../controllers/hotelsController');
+var reservationsController=require('../controllers/ReservationsController');
 
 
 module.exports = {
     users: usersController,
     courses: coursesController,
-    hotels: hotelsController
+    hotels: hotelsController,
+    reservations:reservationsController
 };
