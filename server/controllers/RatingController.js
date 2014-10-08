@@ -22,20 +22,20 @@ function rateHotel(req, res, next) {
 
         if(!isUserRated(hotel.usersWithRates, rateData.userId)){
             hotel.usersWithRates.push(rateData.userId);
-            hotel.star_rating += rateData.rate;
+            hotel.userRating += rateData.rate;
 
             hotel.save(function (err, hotel) {
                 if(err){
                     err;
                 }
                 res.status(200).json({
-                    star_rating: hotel.star_rating,
+                    userRating: hotel.userRating,
                     isAlreadyRated : false
                 });
             })
         } else{
             res.status(200).json({
-                star_rating: hotel.star_rating,
+                userRating: hotel.userRating,
                 isAlreadyRated : true
             });
         }

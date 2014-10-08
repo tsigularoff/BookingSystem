@@ -13,6 +13,7 @@ var hotelSchema = mongoose.Schema({
     pictureUrl: String,
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     rooms: [roomSchema],
+    userRating : Number,
     usersWithRates : [{userId : String}]
 });
 
@@ -40,7 +41,8 @@ module.exports.seedInitialHotels = function () {
                         city: 'Sofia',
                         pictureUrl: 'http://bucharest-guide.ro/poze/76b4d89b45fb70dc02ddf8aa4f077585.jpg',
                         owner: user,
-                        usersWithRates : []
+                        usersWithRates : [],
+                        userRating : 0
                     });
                     var roomOne = new Room({
                         room_type: 'Single',
@@ -61,7 +63,8 @@ module.exports.seedInitialHotels = function () {
                         city: 'New York',
                         pictureUrl: 'http://www.starwoodhotels.com/pub/media/421/she421ex.52616_md.jpg',
                         owner: user,
-                        usersWithRates : []
+                        usersWithRates : [],
+                        userRating : 0
                     });
                     var roomTwo = new Room({
                         room_type: 'Double',
