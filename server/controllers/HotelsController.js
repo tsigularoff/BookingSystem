@@ -47,7 +47,13 @@ function getAvailableHotels(req, res, next) {
         city = req.query.city || /.+/,
         room_type = req.query.room_type || /.+/,
         room_max_occupancy = req.query.room_max_occupancy || 1,
-        price = req.query.price || 1;
+        price = req.query.price || 1,
+        reqFromDate = new Date(req.query.fromDate),
+        reqToDate = new Date(req.query.toDate);
+
+    if (reqToDate <= reqFromDate) {
+        return res.status(400).json({message: 'Departure date must be after the arrival date!'});
+    }
 
     Hotel.find({})
         .where('star_rating').gte(star_rating)
@@ -62,27 +68,29 @@ function getAvailableHotels(req, res, next) {
             var availableHotels = [];
             for (var i = 0; i < hotels.length; i++) {
                 var hotel = hotels[i];
-                var isAvailable = true;
+                var availableRooms = [];
                 for (var j = 0; j < hotel.rooms.length; j++) {
-                    var bookings = hotel.rooms[j].bookings;
+                    var isAvailable = true;
+                    var room = hotel.rooms[j];
+                    var bookings = room.bookings;
                     for (var k = 0; k < bookings.length; k++) {
                         var bookingFromDate = new Date(bookings[k].fromDate);
                         var bookingToDate = new Date(bookings[k].toDate);
-                        var reqFromDate = new Date(req.query.fromDate);
-                        var reqToDate = new Date(req.query.toDate);
-                        if (reqToDate <= reqFromDate) {
-                            return res.status(400).json({message: 'Departure date must be after the arrival date!'});
-                        }
                         if (bookingFromDate < reqToDate && reqFromDate < bookingToDate) {
                             isAvailable = false;
                             break;
                         }
                     }
+                    if (isAvailable) {
+                        availableRooms.push(room);
+                    }
                 }
-                if (isAvailable) {
+                if (availableRooms.length > 0) {
+                    hotel.rooms = availableRooms;
                     availableHotels.push(hotel);
                 }
             }
+            var availableHotels = availableHotels.slice((page - 1) * ITEMS_LIMIT, ((page - 1) * ITEMS_LIMIT) + ITEMS_LIMIT);
             res.send(availableHotels);
         });
 }
