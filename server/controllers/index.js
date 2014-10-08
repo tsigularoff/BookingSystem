@@ -12,5 +12,4 @@ module.exports = {
     hotels: hotelsController,
     reservations: reservationsController,
     rooms: roomsController
-
 };
