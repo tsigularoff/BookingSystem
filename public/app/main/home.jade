@@ -4,5 +4,12 @@
         h2 Find the perfect place for your holiday!
     .row
         .panel.panel-info
+            .panel-heading.text-center Statistics info
+            .pane.panel-body
+                table.table
+                    th.thead Total registered users: {{stats.usersCount}}
+                    th.thead Total registered hotels: {{stats.hotelsCount}}
+    .row
+        .panel.panel-info
             .panel-heading.text-center Top Rated Hotels
             .panel-body(ng-include="'/partials/main/hotels'")
