@@ -40,6 +40,37 @@ function getHotelById(req, res, next) {
     })
 }
 
+function getAvailableHotels(req, res, next) {
+    var page = validators.validatePage(req.query.page),
+        sortBy = validators.validateSort(req.query.sortBy, ALLOWED_SORT_HOTELS),
+        star_rating = req.query.star_rating || 1,
+        city = req.query.city || /.+/,
+        room_type = req.query.room_type || /.+/,
+        room_max_occupancy = req.query.room_max_occupancy || 1,
+        price = req.query.price || 1,
+        reqFromDate = new Date(req.query.fromDate),
+        reqToDate = new Date(req.query.toDate);
+
+    if (reqToDate <= reqFromDate) {
+        return res.status(400).json({message: 'Departure date must be after the arrival date!'});
+    }
+
+    Hotel.find({})
+        .where('star_rating').gte(star_rating)
+        .where({city: city})
+        .where('rooms.room_max_occupancy').gte(room_max_occupancy)
+        .where('rooms.price').gte(price)
+        .where({'rooms.room_type': room_type})
+        .populate('owner').exec(function (err, hotels) {
+            if (err) {
+                throw "Hotels could not be loaded" + err;
+            }
+            var availableHotels = filterAvailableRooms(hotels, reqToDate, reqFromDate);
+            var availableHotels = availableHotels.slice((page - 1) * ITEMS_LIMIT, ((page - 1) * ITEMS_LIMIT) + ITEMS_LIMIT);
+            res.send(availableHotels);
+        });
+}
+
 function deleteHotel(req, res, next) {
     Hotel.findOne({_id: req.params.id}).exec(function (err, hotel) {
         if (err || !hotel) {
@@ -58,9 +89,39 @@ function deleteHotel(req, res, next) {
     });
 }
 
+function filterAvailableRooms(hotels, reqToDate, reqFromDate) {
+    var availableHotels = [];
+    for (var i = 0; i < hotels.length; i++) {
+        var hotel = hotels[i];
+        var availableRooms = [];
+        for (var j = 0; j < hotel.rooms.length; j++) {
+            var isAvailable = true;
+            var room = hotel.rooms[j];
+            var bookings = room.bookings;
+            for (var k = 0; k < bookings.length; k++) {
+                var bookingFromDate = new Date(bookings[k].fromDate);
+                var bookingToDate = new Date(bookings[k].toDate);
+                if (bookingFromDate < reqToDate && reqFromDate < bookingToDate) {
+                    isAvailable = false;
+                    break;
+                }
+            }
+            if (isAvailable) {
+                availableRooms.push(room);
+            }
+        }
+        if (availableRooms.length > 0) {
+            hotel.rooms = availableRooms;
+            availableHotels.push(hotel);
+        }
+    }
+    return availableHotels;
+}
+
 module.exports = {
     getAllHotels: getAllHotels,
     getHotelById: getHotelById,
     createHotel: createHotel,
-    deleteHotel: deleteHotel
+    deleteHotel: deleteHotel,
+    getAvailableHotels: getAvailableHotels
 };
