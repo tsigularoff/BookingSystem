@@ -21,6 +21,8 @@ module.exports = function (app) {
     app.post('/api/hotels/:id/rooms', auth.isInRole(['admin', 'owner']), controllers.rooms.createRoom);
     app.delete('/api/hotels/:id/rooms/:roomId', auth.isInRole(['admin', 'owner']), controllers.rooms.deleteRoom);
 
+    app.get('/api/stats', controllers.statistics.getStatistics);
+
     app.get('/partials/:partialArea/:partialName', function (req, res) {
         res.render('../../public/app/' + req.params.partialArea + '/' + req.params.partialName)
     });

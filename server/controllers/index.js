@@ -4,6 +4,7 @@ var hotelsController = require('../controllers/hotelsController');
 var reservationsController = require('../controllers/ReservationsController');
 
 var roomsController = require('../controllers/roomsController');
+var statisticsController = require('../controllers/StatisticsController');
 
 
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
     courses: coursesController,
     hotels: hotelsController,
     reservations: reservationsController,
-    rooms: roomsController
+    rooms: roomsController,
+    statistics: statisticsController
 };
