@@ -65,31 +65,7 @@ function getAvailableHotels(req, res, next) {
             if (err) {
                 throw "Hotels could not be loaded" + err;
             }
-            var availableHotels = [];
-            for (var i = 0; i < hotels.length; i++) {
-                var hotel = hotels[i];
-                var availableRooms = [];
-                for (var j = 0; j < hotel.rooms.length; j++) {
-                    var isAvailable = true;
-                    var room = hotel.rooms[j];
-                    var bookings = room.bookings;
-                    for (var k = 0; k < bookings.length; k++) {
-                        var bookingFromDate = new Date(bookings[k].fromDate);
-                        var bookingToDate = new Date(bookings[k].toDate);
-                        if (bookingFromDate < reqToDate && reqFromDate < bookingToDate) {
-                            isAvailable = false;
-                            break;
-                        }
-                    }
-                    if (isAvailable) {
-                        availableRooms.push(room);
-                    }
-                }
-                if (availableRooms.length > 0) {
-                    hotel.rooms = availableRooms;
-                    availableHotels.push(hotel);
-                }
-            }
+            var availableHotels = filterAvailableRooms(hotels, reqToDate, reqFromDate);
             var availableHotels = availableHotels.slice((page - 1) * ITEMS_LIMIT, ((page - 1) * ITEMS_LIMIT) + ITEMS_LIMIT);
             res.send(availableHotels);
         });
@@ -111,6 +87,35 @@ function deleteHotel(req, res, next) {
             res.status(400).json({message: 'You do not have permissions!'});
         }
     });
+}
+
+function filterAvailableRooms(hotels, reqToDate, reqFromDate) {
+    var availableHotels = [];
+    for (var i = 0; i < hotels.length; i++) {
+        var hotel = hotels[i];
+        var availableRooms = [];
+        for (var j = 0; j < hotel.rooms.length; j++) {
+            var isAvailable = true;
+            var room = hotel.rooms[j];
+            var bookings = room.bookings;
+            for (var k = 0; k < bookings.length; k++) {
+                var bookingFromDate = new Date(bookings[k].fromDate);
+                var bookingToDate = new Date(bookings[k].toDate);
+                if (bookingFromDate < reqToDate && reqFromDate < bookingToDate) {
+                    isAvailable = false;
+                    break;
+                }
+            }
+            if (isAvailable) {
+                availableRooms.push(room);
+            }
+        }
+        if (availableRooms.length > 0) {
+            hotel.rooms = availableRooms;
+            availableHotels.push(hotel);
+        }
+    }
+    return availableHotels;
 }
 
 module.exports = {
