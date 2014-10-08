@@ -11,6 +11,7 @@ module.exports = function (app) {
     app.get('/api/courses', controllers.courses.getAllCourses);
     app.get('/api/courses/:id', controllers.courses.getCourseById);
 
+
     app.get('/api/hotels', controllers.hotels.getAllHotels);
     app.post('/api/hotels', auth.isAuthenticated, controllers.hotels.createHotel);
     app.post('/api/hotels/:id/reservations'/*, auth.isAuthenticated*/, validator.express(app.get('reservationCheck')), controllers.reservations.makeReservation);
@@ -23,6 +24,7 @@ module.exports = function (app) {
     app.post('/api/hotels/:id/rooms', auth.isInRole(['admin', 'owner']), controllers.rooms.createRoom);
     app.delete('/api/hotels/:id/rooms/:roomId', auth.isInRole(['admin', 'owner']), controllers.rooms.deleteRoom);
 
+    app.post('/api/hotels/:id/rate', controllers.rating.rateHotel);
     app.get('/api/stats', controllers.statistics.getStatistics);
 
     app.get('/partials/:partialArea/:partialName', function (req, res) {

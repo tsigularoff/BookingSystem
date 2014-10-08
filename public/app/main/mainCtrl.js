@@ -10,7 +10,6 @@ app.controller('MainCtrl', function($scope, HotelsData, StatisticsData) {
     StatisticsData.getStatistics()
         .then(function (data) {
             $scope.stats = data;
-            console.log(data);
         }, function (err) {
 
         });
