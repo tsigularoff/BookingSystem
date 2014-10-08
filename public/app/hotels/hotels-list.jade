@@ -18,6 +18,11 @@
             th Title
         tr(ng-repeat="hotel in hotels | filter: search | orderBy: sort")
             td
-                a(href="#/hotels/{{ hotel._id }}") {{ hotel.name }} {{ hotel.star_rating }}
+                a(href="#/hotels/{{ hotel._id }}") {{ hotel.name }} 
+                img(src='http://png-4.findicons.com/files/icons/236/merry_christmas/128/golden_star.png', height='20px' ng-show='{{hotel.star_rating>=1}}')
+                img(src='http://png-4.findicons.com/files/icons/236/merry_christmas/128/golden_star.png', height='20px' ng-show='{{hotel.star_rating>=2}}')
+                img(src='http://png-4.findicons.com/files/icons/236/merry_christmas/128/golden_star.png', height='20px' ng-show='{{hotel.star_rating>=3}}')
+                img(src='http://png-4.findicons.com/files/icons/236/merry_christmas/128/golden_star.png', height='20px' ng-show='{{hotel.star_rating>=4}}')
+                img(src='http://png-4.findicons.com/files/icons/236/merry_christmas/128/golden_star.png', height='20px' ng-show='{{hotel.star_rating>=5}}')
     br
 
