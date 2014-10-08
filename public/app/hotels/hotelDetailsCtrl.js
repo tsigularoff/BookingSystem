@@ -18,7 +18,12 @@ app.controller('HotelDetailsController', function ($scope, $location, $routePara
 
         ratingService.rateHotel(ratingData)
             .then(function (data) {
-                $scope.hotel.star_rating = data.star_rating;
+                if(data.isAlreadyRated){
+                    notifier.error("You've already rated this hotel");
+                } else{
+                    $scope.hotel.star_rating = data.star_rating;
+                }
+
             }, function (err) {
                 console.log(err);
             })
