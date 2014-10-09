@@ -1,14 +1,14 @@
 .container(ng-controller="HotelDetailsController")
     h1 Welcome to {{hotel.name}}
     div.container.row
-        .panel.panel-info
-            ul.panel-heading.text-left.col-md-6  Hotel Information
+        .panel.panel-info.col-md-6
+            ul.panel-heading.text-left Hotel Information
             .panel-body
                li.list-group-item Total Rooms : {{hotel.rooms.length}}
                li.list-group-item About Hotel : {{hotel.description}}
                li.list-group-item User Rating : {{hotel.userRating}}
         .col-md-3
-            img(src="{{hotel.pictureUrl}}")
+            img(src="{{hotel.pictureUrl}}", height="200px")
     .container
         button.btn-info(ng-click="rate(1)") Rate Up
         button.btn-info(ng-click="rate(-1)") Rate Down
