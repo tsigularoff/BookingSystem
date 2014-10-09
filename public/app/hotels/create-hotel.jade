@@ -26,12 +26,12 @@
                     .form-group
                     label.col-md-2.control-label(for="hotel-rooms-count") Rooms Count
                     .col-md-10
-                        input.form-control(type="number", placeholder="Picture URL", ng-model="hotel.roomsCount", required)
+                        input.form-control(type="number", placeholder="Rooms Count", ng-model="hotel.roomsCount", required)
                     .form-group
                     label.col-md-2.control-label(for="hotel-about") About Hotel
                     .col-md-10
-                        input.form-control(type="text", placeholder="Picture URL", ng-model="hotel.description", required)
-                    .pull-right
+                        input.form-control(type="text", placeholder="About", ng-model="hotel.description", required)
+                    div
                         button.btn.btn-primary(ng-click="createHotel(hotel)", ng-disabled="hotelAddForm.$invalid") Create
                         a.btn.btn-primary(href="#/") Cancel
 
