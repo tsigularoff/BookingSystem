@@ -10,3 +10,21 @@
     .container
         button.btn-info(ng-click="rate(1)") Rate Up
         button.btn-info(ng-click="rate(-1)") Rate Down
+    div(class="book-container")
+        h2.h2 Book now
+            .row
+                table.table
+                    tr
+                        th Room Type
+                        th Check in Date
+                        th Check out Date
+                    tr
+                        td
+                            select(class="room-type-select")
+                                option(ng-repeat="room in hotel.rooms") {{room.room_max_occupancy}}
+                        td
+                            input(type="text", ng-model="startDate" placeholder="Click for date", id="datepicker-start")
+                        td
+                            input(type="text", ng-model="endDate" placeholder="Click for date", id="datepicker-end")
+                button.btn-sm.btn-info(ng-click="bookNow(startDate, endDate)") Book Now
+    script(type="text/javascript" src="/app/common/datepicker.js")

@@ -11,7 +11,8 @@ module.exports = function (app) {
     app.get('/api/hotels', controllers.hotels.getAllHotels);
     app.get('/api/hotels/available'/*, auth.isAuthenticated*/, controllers.hotels.getAvailableHotels);
     app.get('/api/hotels/:id', auth.isAuthenticated, controllers.hotels.getHotelById);
-    app.post('/api/hotels/:id/reservations'/*, auth.isAuthenticated*/, validator.express(app.get('reservationCheck')), controllers.reservations.makeReservation);
+//    app.post('/api/hotels/:id/reservations'/*, auth.isAuthenticated*/, validator.express(app.get('reservationCheck')), controllers.reservations.makeReservation);
+    app.post('/api/hotels/:id/reservation', auth.isAuthenticated, controllers.reservations.makeReservation);
     app.post('/api/hotels', auth.isInRole(['admin', 'owner']), controllers.hotels.createHotel);
     app.delete('/api/hotels/:id', auth.isAuthenticated, controllers.hotels.deleteHotel);
 
