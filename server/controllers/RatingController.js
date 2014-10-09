@@ -4,8 +4,8 @@ var User = require('mongoose').model('User');
 function isUserRated(allUsers, currentUserId) {
     var i, len = allUsers.length;
 
-    for( i = 0; i< len; i+=1){
-        if(allUsers[i]._id.toString() === currentUserId.toString()){
+    for (i = 0; i < len; i += 1) {
+        if (allUsers[i]._id.toString() === currentUserId.toString()) {
             return true;
         }
     }
@@ -15,31 +15,30 @@ function isUserRated(allUsers, currentUserId) {
 function rateHotel(req, res, next) {
     var rateData = req.body;
 
-    Hotel.findOne({_id : rateData.hotelId}, function (err, hotel) {
-        if(err){
-            err;
+    Hotel.findOne({_id: rateData.hotelId}, function (err, hotel) {
+        if (err) {
+            res.status(400).json({message: err});
         }
 
-        if(!isUserRated(hotel.usersWithRates, rateData.userId)){
+        if (!isUserRated(hotel.usersWithRates, rateData.userId)) {
             hotel.usersWithRates.push(rateData.userId);
             hotel.userRating += rateData.rate;
 
             hotel.save(function (err, hotel) {
-                if(err){
-                    err;
+                if (err) {
+                    res.status(400).json({message: err});
                 }
                 res.status(200).json({
                     userRating: hotel.userRating,
-                    isAlreadyRated : false
+                    isAlreadyRated: false
                 });
             })
-        } else{
+        } else {
             res.status(200).json({
                 userRating: hotel.userRating,
-                isAlreadyRated : true
+                isAlreadyRated: true
             });
         }
-
     });
 }
 

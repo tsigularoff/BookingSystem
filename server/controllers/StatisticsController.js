@@ -19,15 +19,14 @@ function getStatistics(req, res, next) {
             }
             usersCount = count;
             res.send({
-                    usersCount : usersCount,
-                    hotelsCount : hotelsCount,
-                    reservationsCount : reservationsCount | 0
+                    usersCount: usersCount,
+                    hotelsCount: hotelsCount,
+                    reservationsCount: reservationsCount | 0
                 }
             );
             res.end();
         })
     });
-
 }
 
 module.exports = {

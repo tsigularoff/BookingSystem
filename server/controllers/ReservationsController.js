@@ -9,7 +9,7 @@ var Room = mongoose.model('Room');
 
 function makeReservation(req, res, next) {
     Hotel.findOne({_id: req.params.id})
-        .findOne({_id: req.params.id}).and([
+        .and([
             {'rooms._id': req.body.roomId}
         ])
         .select('rooms')
@@ -21,7 +21,7 @@ function makeReservation(req, res, next) {
             var booking = new Booking();
             booking.fromDate = req.body.fromDate;
             booking.toDate = req.body.toDate;
-            booking.bookerId = 'to-delete-this';
+            booking.bookerId = req.user;
             var room = hotel.rooms.id(req.body.roomId);
 
             room.bookings.push(booking);
@@ -32,13 +32,6 @@ function makeReservation(req, res, next) {
                 res.send(room);
             });
         });
-
-//console.log(req.body);
-//    Room.findOne({_id:req.body.roomId}).exec(function (err,room) {
-//        res.send(room);
-//    });
-
-
 }
 
 module.exports = {

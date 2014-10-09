@@ -25,7 +25,7 @@ function createHotel(req, res, next) {
         if (err) {
             res.status(400).json({message: err});
         }
-        res.json(hotel);
+        res.status(201).json(hotel);
     });
 }
 
