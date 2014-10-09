@@ -19,6 +19,7 @@ function rateHotel(req, res, next) {
         if (err) {
             res.status(400).json({message: err});
         }
+        console.log(hotel.rooms);
 
         if (!isUserRated(hotel.usersWithRates, rateData.userId)) {
             hotel.usersWithRates.push(rateData.userId);

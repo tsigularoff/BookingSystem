@@ -7,7 +7,9 @@ app.controller('HotelDetailsController', function ($scope, $location, $routePara
             $location.path('/');
         });
 
+
     $scope.rate = rate;
+    $scope.bookNow = bookNow;
 
     function rate(rate) {
         var ratingData = {
@@ -28,4 +30,20 @@ app.controller('HotelDetailsController', function ($scope, $location, $routePara
                 console.log(err);
             })
     }
+
+    function bookNow (startDate, endDate) {
+        var reservationData = {
+            userId : identity.currentUser._id,
+            startDate : startDate,
+            endDate : endDate
+        };
+
+        HotelsData.makeReservation(reservationData)
+            .then(function (data) {
+                console.log(data);
+            }, function (err) {
+                console.log(err);
+            });
+    }
+
 });

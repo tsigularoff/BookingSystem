@@ -1,4 +1,4 @@
-app.factory('HotelsData', function($resource, $q, $http, identity) {
+app.factory('HotelsData', function($resource, $routeParams, $q, $http, identity) {
 
     function getAllHotels() {
         var deffered = $q.defer();
@@ -61,9 +61,29 @@ app.factory('HotelsData', function($resource, $q, $http, identity) {
         return deffered.promise;
     }
 
+    function makeReservation(reservationData) {
+        var deffered = $q.defer();
+        var hotelId =  $routeParams.id;
+
+        $http({
+            method: 'POST',
+            url : '/api/hotels/' + hotelId + '/reservation',
+            data : reservationData
+        })
+            .success(function (data) {
+                deffered.resolve(data);
+            })
+            .error(function (err) {
+                deffered.reject(err);
+            });
+
+        return deffered.promise;
+    }
+
     return {
         getAllHotels : getAllHotels,
         createHotel : createHotel,
-        getHotelById : getHotelById
+        getHotelById : getHotelById,
+        makeReservation : makeReservation
     }
 });
