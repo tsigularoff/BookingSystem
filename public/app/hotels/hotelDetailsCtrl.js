@@ -1,15 +1,18 @@
 app.controller('HotelDetailsController', function ($scope, $location, $routeParams, identity, HotelsData, notifier, ratingService) {
+
+    $scope.rate = rate;
+    $scope.bookNow = bookNow;
+    $scope.roomTypes = [];
+
     HotelsData.getHotelById($routeParams.id)
         .then(function (data) {
             $scope.hotel = data;
+            console.log(data);
+            addRoomTypes(data);
         }, function (err) {
             notifier.error('Please login first!');
             $location.path('/');
         });
-
-
-    $scope.rate = rate;
-    $scope.bookNow = bookNow;
 
     function rate(rate) {
         var ratingData = {
@@ -61,6 +64,26 @@ app.controller('HotelDetailsController', function ($scope, $location, $routePara
             }, function (err) {
                 console.log(err);
             });
+    }
+
+    function addRoomTypes(hotel) {
+        var isRoomTypeAdded = false;
+
+        for(var i =0; i< hotel.rooms.length; i+=1){
+            var roomType = hotel.rooms[i].room_max_occupancy;
+
+            for(var j = 0; j < $scope.roomTypes.length; j+=1){
+                if(roomType == $scope.roomTypes[j]){
+                    isRoomTypeAdded = true;
+                    break;
+                }
+            }
+
+            if(!isRoomTypeAdded){
+                $scope.roomTypes.push(roomType);
+            }
+            isRoomTypeAdded = false;
+        }
     }
 
 });

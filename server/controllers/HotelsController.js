@@ -1,4 +1,5 @@
 var Hotel = require('mongoose').model('Hotel');
+var Room = require('mongoose').model('Room');
 var validators = require('../utilities/validators');
 
 var ALLOWED_SORT_HOTELS = ['name']; //TODO: Fill
@@ -19,7 +20,12 @@ function getAllHotels(req, res, next) {
 }
 function createHotel(req, res, next) {
     var hotel = new Hotel(req.body);
+    var roomsCount = req.body.roomsCount;
+
     hotel.owner = req.user;
+    console.log(hotel);
+    generateRooms(hotel, roomsCount);
+    console.log(hotel.rooms);
 
     hotel.save(function (err) {
         if (err) {
@@ -27,6 +33,21 @@ function createHotel(req, res, next) {
         }
         res.status(201).json(hotel);
     });
+}
+
+function generateRooms(hotel, count) {
+    var i;
+    console.log('here');
+    for (i = 0; i < count; i += 1) {
+        var room = new Room({
+            room_type: 'Double',
+            room_max_occupancy: 2,
+            price: 30,
+            pictureUrl: ''
+        });
+        hotel.rooms.push(room);
+        console.log(hotel.rooms);
+    }
 }
 
 function getHotelById(req, res, next) {

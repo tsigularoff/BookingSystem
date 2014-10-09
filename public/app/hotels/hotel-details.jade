@@ -23,7 +23,7 @@
                     tr
                         td
                             select(class="room-type-select", ng-model="roomType")
-                                option(ng-repeat="room in hotel.rooms") {{room.room_max_occupancy}}
+                                option(ng-repeat="r in roomTypes") {{r}}
                         td
                             input(type="text", ng-model="startDate" placeholder="Click for date", id="datepicker-start")
                         td

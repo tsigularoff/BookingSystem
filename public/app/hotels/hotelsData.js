@@ -31,7 +31,9 @@ app.factory('HotelsData', function($resource, $routeParams, $q, $http, identity)
                 city : data.city,
                 pictureUrl : data.pictureUrl,
                 rooms : [],
-                owner : identity.currentUser._id
+                roomsCount : data.roomsCount,
+                owner : identity.currentUser._id,
+                userRating : data.userRating
             }
         })
             .success(function (data) {
@@ -39,7 +41,7 @@ app.factory('HotelsData', function($resource, $routeParams, $q, $http, identity)
             })
             .error(function (err) {
                 deffered.reject(err);
-            })
+            });
 
         return deffered.promise;
     }
