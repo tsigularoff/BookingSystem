@@ -18,7 +18,7 @@ footer p {
   border-top: 1px solid #808080;
   padding-top: 10px;
 }
-
-.book-container th, td{
-    font-size: 15px;
+.book-container td,
+th {
+  font-size: 15px;
 }

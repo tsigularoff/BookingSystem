@@ -1,46 +1,86 @@
-/**
- * Created by Geno on 7.10.2014 г..
- */
 var mongoose = require('mongoose');
 var Hotel = mongoose.model('Hotel');
 var Booking = mongoose.model('Booking');
 var Room = mongoose.model('Room');
 
+var newBooking;
 
-//function makeReservation(req, res, next) {
-//    Hotel.findOne({_id: req.params.id})
-//        .and([
-//            {'rooms._id': req.body.roomId}
-//        ])
-//        .select('rooms')
-//        .exec(function (err, hotel) {
-//            if (err || !hotel) {
-//                res.status(400).json({message: err ? err : 'No such hotel exists!'});
-//            }
-//
-//            var booking = new Booking();
-//            booking.fromDate = req.body.fromDate;
-//            booking.toDate = req.body.toDate;
-//            booking.bookerId = req.user;
-//            var room = hotel.rooms.id(req.body.roomId);
-//
-//            room.bookings.push(booking);
-//            hotel.save(function (err, hotel) {
-//                if (err) {
-//                    res.status(400).json({message: err});
-//                }
-//                res.send(room);
-//            });
-//        });
-//}
+function isReservationPossible(reservationInfo, hotel) {
+    var i, j,
+        room, currentBooking,
+        len = hotel.rooms.length,
+        isBookPossible = false,
+        roomIndex;
+
+    var reqStartDate = new Date(reservationInfo.startDate),
+        reqEndDate = new Date(reservationInfo.endDate),
+        bookingStartDate, bookingEndDate;
+
+    for(i = 0; i<len; i++){
+
+        var bookingLen = hotel.rooms[i].bookings.length;
+
+        if(hotel.rooms[i].room_max_occupancy == reservationInfo.roomType){
+            for(j = 0; j < bookingLen ; j+=1){
+                currentBooking = hotel.rooms[i].bookings[j];
+
+                bookingStartDate = new Date(currentBooking.fromDate);
+                bookingEndDate = new Date(currentBooking.toDate);
+
+                if(reqEndDate < bookingStartDate || reqStartDate > bookingEndDate){
+                    isBookPossible = true;
+                    roomIndex = i;
+                } else {
+                    isBookPossible = false;
+                }
+            }
+
+            if(isBookPossible){
+                break;
+            }
+
+            if(bookingLen == 0){
+                isBookPossible = true;
+                roomIndex = i;
+                break;
+            }
+        }
+
+    }
+
+    if(isBookPossible){
+        newBooking = new Booking({
+            fromDate: reqStartDate,
+            toDate: reqEndDate,
+            bookerId: reservationInfo.userId});
+        hotel.rooms[roomIndex].bookings.push(newBooking);
+    }
+    return isBookPossible;
+}
 
 function makeReservation(req, res, next) {
-    console.log(req.body);
 
+    var reservationInfo = req.body;
 
-    res.status(200).json({
-        prop : true
+    Hotel.findOne({_id : reservationInfo.hotelId}, function (err, hotel) {
+        if(err){
+            throw err;
+        }
+        if(isReservationPossible(reservationInfo, hotel)){
+            hotel.save(function (err) {
+                if(err){
+                    throw 'Error saving reservation in db' + err;
+                }
+                res.status(200).json(newBooking);
+            });
+        } else{
+            res.status(200).json({
+                errBookingMessage : "No available room for this period"
+            })
+        }
     });
+
+
 }
 
 module.exports = {

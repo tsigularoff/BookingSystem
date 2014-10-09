@@ -48,11 +48,18 @@ module.exports.seedInitialHotels = function () {
                         room_type: 'Single',
                         room_max_occupancy: 1,
                         price: 30,
-                        pictureUrl: 'http://www.hotelcaledonianbarcelona.com/images/single-room.png',
+                        pictureUrl: 'http://www.hotelcaledonianbarcelona.com/images/single-room.png'
+                    });
+                    var roomTwo = new Room({
+                        room_type: 'Double',
+                        room_max_occupancy: 2,
+                        price: 50,
+                        pictureUrl: 'http://www.hotelcaledonianbarcelona.com/images/single-room.png'
                     });
                     var bookingOne = new Booking({fromDate: new Date('10/11/2014'), toDate: new Date('10/15/2014'), bookerId: user});
                     roomOne.bookings.push(bookingOne);
                     hotelOne.rooms.push(roomOne);
+                    hotelOne.rooms.push(roomTwo);
                     hotelOne.save();
 
                     var hotelTwo = new Hotel({
