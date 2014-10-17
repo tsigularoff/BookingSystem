@@ -58,7 +58,7 @@ app.controller('HotelDetailsController', function ($scope, $location, $routePara
                 } else {
                     notifier.success("Success booking");
                     $scope.isSuccessBooking = true;
-                    data._id = data._id.substring(0, 5);
+                    data.bookingId = getRandomBookingId();
                     $scope.bookingData = data;
                 }
             }, function (err) {
@@ -85,5 +85,11 @@ app.controller('HotelDetailsController', function ($scope, $location, $routePara
             isRoomTypeAdded = false;
         }
     }
+
+    function getRandomBookingId() {
+        var bookingId = Math.floor(Math.random()*13445);
+        return bookingId;
+    }
+
 
 });
